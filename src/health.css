@@ -1,0 +1,164 @@
+body,
+html {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+}
+
+.main-container {
+  width: 300px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.yellow-background {
+  background-color: yellow;
+  padding: 20px;
+  border-radius: 10px;
+  position: relative;
+}
+
+.start-button {
+  background-color: #2196f3;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.start-button:hover {
+  background-color: #1e88e5;
+}
+
+.microphone-button {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin: 20px auto 0 auto; /* Center the microphone button horizontally */
+}
+
+.microphone-icon {
+  color: #333;
+  font-size: 24px;
+}
+
+.microphone-button:hover .microphone-icon {
+  color: #000;
+}
+
+.cancel-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.popup {
+  margin-top: 20px;
+  padding: 2px;
+  background-color: #f2f2f2;
+  /* border: 1px solid #ccc; */
+  border-radius: 5px;
+  display: flex;
+}
+
+.record-button {
+  background-color: #2196f3;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.record-button:hover {
+  background-color: #1e88e5;
+}
+
+.cancel-button {
+  background-color: #f44336;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.cancel-button:hover {
+  background-color: #e53935;
+}
+
+.stop-button {
+  background-color: #ff5722;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.stop-button:hover {
+  background-color: #e64a19;
+}
+
+.timer {
+  margin-top: 20px;
+  font-size: 18px;
+  color: #333;
+}
+
+.recordings-list {
+  margin-top: 20px;
+}
+
+.recording-item {
+  background-color: #eeeeee;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: move; /* Indicate that the item can be dragged */
+}
+
+.remove-button {
+  background-color: #ff5722;
+  color: white;
+  padding: 5px 10px;
+  font-size: 14px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.remove-button:hover {
+  background-color: #e64a19;
+}
+
+canvas {
+  display: none;
+}
