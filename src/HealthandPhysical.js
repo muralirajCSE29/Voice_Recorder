@@ -5,6 +5,7 @@ import { sortableContainer, sortableElement } from "react-sortable-hoc";
 import { arrayMoveImmutable } from "array-move";
 import "./health.css";
 
+// Sortable items for the audio list
 const SortableItem = sortableElement(({ recording, index, onRemove }) => {
   return (
     <div className="recording-item">
@@ -22,6 +23,7 @@ const SortableItem = sortableElement(({ recording, index, onRemove }) => {
   );
 });
 
+// Sortable container for the audio list
 const SortableList = sortableContainer(({ items, onRemove }) => (
   <div className="recordings-list">
     {items.map((recording, index) => (
@@ -41,6 +43,9 @@ const HealthandPhysical = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [showMic, setShowMic] = useState(false);
   const [timer, setTimer] = useState(0);
+  const [containerPos, setContainerPos] = useState({ top: 100, left: 100 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     let interval;
@@ -81,73 +86,114 @@ const HealthandPhysical = () => {
     setRecordings((prev) => arrayMoveImmutable(prev, oldIndex, newIndex));
   };
 
-  return (
-    <div className="main-container">
-      <div className="yellow-background">
-        {!showMic && (
-          <button className="start-button" onClick={() => setShowMic(true)}>
-            Let's Start
-          </button>
-        )}
-        {showMic && (
-          <>
-            <button className="cancel-icon" onClick={handleCancel}>
-              <FaTimes />
-            </button>
-            <button
-              className="microphone-button"
-              onClick={() => setShowPopup(true)}
-            >
-              <FaMicrophone className="microphone-icon" />
-            </button>
-          </>
-        )}
-      </div>
+  // Mouse down event for dragging the container
+  const handleMouseDown = (e) => {
+    if (e.target.closest(".recordings-list")) {
+      // Prevent dragging the container when interacting with the sortable list
+      return;
+    }
+    setIsDragging(true);
+    setDragStart({
+      x: e.clientX - containerPos.left,
+      y: e.clientY - containerPos.top,
+    });
+  };
 
-      {showPopup && (
-        <div className="popup">
-          <button className="record-button" onClick={handleStartRecording}>
-            Start Recording
-          </button>
-          <button className="cancel-button" onClick={handleCancel}>
-            Cancel
-          </button>
-          {isRecording && (
-            <div className="timer">
-              <span>Recording: {timer}</span>
-              <button
-                className="stop-button"
-                onClick={() => setIsRecording(false)}
-              >
-                Stop Recording
+  const handleMouseMove = (e) => {
+    if (!isDragging) return;
+    setContainerPos({
+      top: e.clientY - dragStart.y,
+      left: e.clientX - dragStart.x,
+    });
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  return (
+    <div
+      className="drag-container"
+      style={{
+        position: "absolute",
+        top: containerPos.top,
+        left: containerPos.left,
+      }}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseUp}
+    >
+      <div className="main-container">
+        <div className="yellow-background">
+          {!showMic && (
+            <button className="start-button" onClick={() => setShowMic(true)}>
+              Let's Start
+            </button>
+          )}
+          {showMic && (
+            <>
+              <button className="cancel-icon" onClick={handleCancel}>
+                <FaTimes />
               </button>
-            </div>
+              <button
+                className="microphone-button"
+                onClick={() => setShowPopup(true)}
+              >
+                <FaMicrophone className="microphone-icon" />
+              </button>
+            </>
           )}
         </div>
-      )}
 
-      <ReactMic
-        record={isRecording}
-        className="sound-wave"
-        onStop={handleStopRecording}
-        strokeColor="#000000"
-        mimeType="audio/webm"
-      />
+        {showPopup && (
+          <div className="popup">
+            <button className="record-button" onClick={handleStartRecording}>
+              Start Recording
+            </button>
+            <button className="cancel-button" onClick={handleCancel}>
+              Cancel
+            </button>
+            {isRecording && (
+              <div className="timer">
+                <span>Recording: {timer}</span>
+                <button
+                  className="stop-button"
+                  onClick={() => setIsRecording(false)}
+                >
+                  Stop Recording
+                </button>
+              </div>
+            )}
+          </div>
+        )}
 
-      {isRecording && (
-        <div className="timer">
-          <span>Recording: {timer}</span>
-          <button className="stop-button" onClick={() => setIsRecording(false)}>
-            Stop Recording
-          </button>
-        </div>
-      )}
+        <ReactMic
+          record={isRecording}
+          className="sound-wave"
+          onStop={handleStopRecording}
+          strokeColor="#000000"
+          mimeType="audio/webm"
+        />
 
-      <SortableList
-        items={recordings}
-        onSortEnd={onSortEnd}
-        onRemove={handleRemoveRecording}
-      />
+        {isRecording && (
+          <div className="timer">
+            <span>Recording: {timer}</span>
+            <button
+              className="stop-button"
+              onClick={() => setIsRecording(false)}
+            >
+              Stop Recording
+            </button>
+          </div>
+        )}
+
+        <SortableList
+          items={recordings}
+          onSortEnd={onSortEnd}
+          onRemove={handleRemoveRecording}
+        />
+      </div>
     </div>
   );
 };
