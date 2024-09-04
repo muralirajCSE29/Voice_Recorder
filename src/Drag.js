@@ -1,58 +1,58 @@
-import React, { useState } from "react";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+// import React, { useState } from "react";
+// import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
-const Drag = () => {
-  const [items, setItems] = useState(["Item 1", "Item 2", "Item 3", "Item 4"]);
+// const Drag = () => {
+//   const [items, setItems] = useState(["Item 1", "Item 2", "Item 3", "Item 4"]);
 
-  const handleDragEnd = (result) => {
-    if (!result.destination) return;
+//   const handleDragEnd = (result) => {
+//     if (!result.destination) return;
 
-    const updatedItems = Array.from(items);
-    const [reorderedItem] = updatedItems.splice(result.source.index, 1);
-    updatedItems.splice(result.destination.index, 0, reorderedItem);
+//     const updatedItems = Array.from(items);
+//     const [reorderedItem] = updatedItems.splice(result.source.index, 1);
+//     updatedItems.splice(result.destination.index, 0, reorderedItem);
 
-    setItems(updatedItems);
-  };
+//     setItems(updatedItems);
+//   };
 
-  return (
-    <DragDropContext onDragEnd={handleDragEnd}>
-      <Droppable droppableId="droppable">
-        {(provided) => (
-          <div
-            {...provided.droppableProps}
-            ref={provided.innerRef}
-            style={{ padding: "20px", background: "#f0f0f0" }}
-          >
-            {items.map((item, index) => (
-              <Draggable key={index} draggableId={`${index}`} index={index}>
-                {(provided) => (
-                  <div
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                    style={{
-                      userSelect: "none",
-                      padding: "16px",
-                      margin: "0 0 8px 0",
-                      background: "#fff",
-                      border: "1px solid #ccc",
-                      ...provided.draggableProps.style,
-                    }}
-                  >
-                    {item}
-                  </div>
-                )}
-              </Draggable>
-            ))}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
-    </DragDropContext>
-  );
-};
+//   return (
+//     <DragDropContext onDragEnd={handleDragEnd}>
+//       <Droppable droppableId="droppable">
+//         {(provided) => (
+//           <div
+//             {...provided.droppableProps}
+//             ref={provided.innerRef}
+//             style={{ padding: "20px", background: "#f0f0f0" }}
+//           >
+//             {items.map((item, index) => (
+//               <Draggable key={index} draggableId={`${index}`} index={index}>
+//                 {(provided) => (
+//                   <div
+//                     ref={provided.innerRef}
+//                     {...provided.draggableProps}
+//                     {...provided.dragHandleProps}
+//                     style={{
+//                       userSelect: "none",
+//                       padding: "16px",
+//                       margin: "0 0 8px 0",
+//                       background: "#fff",
+//                       border: "1px solid #ccc",
+//                       ...provided.draggableProps.style,
+//                     }}
+//                   >
+//                     {item}
+//                   </div>
+//                 )}
+//               </Draggable>
+//             ))}
+//             {provided.placeholder}
+//           </div>
+//         )}
+//       </Droppable>
+//     </DragDropContext>
+//   );
+// };
 
-export default Drag;
+// export default Drag;
 
 // import React, { useState } from "react";
 // import "@fortawesome/fontawesome-free/css/all.min.css";
